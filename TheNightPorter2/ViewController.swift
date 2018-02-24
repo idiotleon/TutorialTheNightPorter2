@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // create task arrays
-    let dailyTasks = [
+    var dailyTasks = [
         Task(name: "Check all windows", type: .daily, completed: false, lastCompleted: nil),
         Task(name: "Check all doors", type: .daily, completed: true, lastCompleted: nil),
         Task(name: "Is the boiler fueled?", type: .daily, completed: false, lastCompleted:nil),
@@ -21,13 +21,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         Task(name: "Document \"strange and unusal\" occurrences", type: .daily, completed: false, lastCompleted: nil)
     ]
     
-    let weeklyTasks = [
+    var weeklyTasks = [
         Task(name: "Check inside all cabins", type: .weekly, completed: false, lastCompleted: nil),
         Task(name: "Flush all lavatories in cabins", type: .weekly, completed: false, lastCompleted: nil),
         Task(name: "Walk the periment of property", type: .weekly, completed: false, lastCompleted: nil)
     ]
     
-    let twoWeekTasks = [
+    var twoWeekTasks = [
         Task(name: "Test security alarm", type: .monthly, completed: false, lastCompleted: nil),
         Task(name: "Test motion detectors", type: .monthly, completed: false, lastCompleted: nil),
         Task(name: "Test smoke alarm", type: .monthly, completed: false, lastCompleted: nil)
@@ -37,6 +37,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.backgroundColor = UIColor.clear
         
         return 3
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let completeAction = UIContextualAction(style: .normal, title:"Complete"){
+            (action: UIContextualAction, sourceView: UIView, actionPerformed:(Bool) -> Void) in
+            
+            // find the right object and set it to completed
+            switch indexPath.section{
+            case 0:
+                self.dailyTasks[indexPath.row].completed = true
+            case 1:
+                self.weeklyTasks[indexPath.row].completed = true
+            case 2:
+                self.twoWeekTasks[indexPath.row].completed = true
+            default:
+                break
+            }
+            
+            tableView.reloadData()
+            
+            actionPerformed(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions:[completeAction])
     }
     
     @IBAction func toggleDarkSwitch(_ sender: Any) {
