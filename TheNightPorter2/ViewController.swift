@@ -11,21 +11,27 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // create task arrays
-    let dailyTasks = ["Check all windows",
-                      "Check all doors",
-                      "Check temperature of freezer",
-                      "Check the mailbox at the end of the lane",
-                      "Empty trash containers",
-                      "If freezing, check water pipes outside"]
+    let dailyTasks = [
+        Task(name: "Check all windows", type: .daily, completed: false, lastCompleted: nil),
+        Task(name: "Check all doors", type: .daily, completed: true, lastCompleted: nil),
+        Task(name: "Is the boiler fueled?", type: .daily, completed: false, lastCompleted:nil),
+        Task(name: "Check the mailbox", type: .daily, completed: false, lastCompleted: nil),
+        Task(name: "Empty trash containers", type: .daily, completed: false, lastCompleted: nil),
+        Task(name: "If freezing, check water pipes", type: .daily, completed: false, lastCompleted: nil),
+        Task(name: "Document \"strange and unusal\" occurrences", type: .daily, completed: false, lastCompleted: nil)
+    ]
     
-    let weeklyTasks = ["Check inside all unoccupied cabins",
-                       "Run all faucets for 30 seconds",
-                       "Walk the perimeter of property",
-                       "Arrange for dumpster pickup"]
+    let weeklyTasks = [
+        Task(name: "Check inside all cabins", type: .weekly, completed: false, lastCompleted: nil),
+        Task(name: "Flush all lavatories in cabins", type: .weekly, completed: false, lastCompleted: nil),
+        Task(name: "Walk the periment of property", type: .weekly, completed: false, lastCompleted: nil)
+    ]
     
-    let twoWeekTasks = ["Run tests on security alarm",
-                        "Check all motion detectors",
-                        "Test smoke alarms"]
+    let twoWeekTasks = [
+        Task(name: "Test security alarm", type: .monthly, completed: false, lastCompleted: nil),
+        Task(name: "Test motion detectors", type: .monthly, completed: false, lastCompleted: nil),
+        Task(name: "Test smoke alarm", type: .monthly, completed: false, lastCompleted: nil)
+    ]
     
     func numberOfSections(in tableView: UITableView) -> Int {
         tableView.backgroundColor = UIColor.clear
@@ -59,7 +65,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         
-        var currentTask: String
+        var currentTask: Task!
         switch indexPath.section{
         case 0:
             currentTask = dailyTasks[indexPath.row]
@@ -68,11 +74,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         case 2:
             currentTask = twoWeekTasks[indexPath.row]
         default:
-            currentTask = ""
+            break
         }
         
-        cell.textLabel!.text = currentTask
+        cell.textLabel!.text = currentTask.name
         cell.backgroundColor = UIColor.clear
+        
+        if currentTask.completed {
+            cell.textLabel?.textColor = UIColor.lightGray
+            cell.accessoryType = .checkmark
+        }else{
+            cell.textLabel?.textColor = UIColor.black
+            cell.accessoryType = .none
+        }
         
         return cell
     }
