@@ -10,10 +10,12 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var taskTableView:UITableView!
+    
     // create task arrays
     var dailyTasks = [
         Task(name: "Check all windows", type: .daily, completed: false, lastCompleted: nil),
-        Task(name: "Check all doors", type: .daily, completed: true, lastCompleted: nil),
+        Task(name: "Check all doors", type: .daily, completed: false, lastCompleted: nil),
         Task(name: "Is the boiler fueled?", type: .daily, completed: false, lastCompleted:nil),
         Task(name: "Check the mailbox", type: .daily, completed: false, lastCompleted: nil),
         Task(name: "Empty trash containers", type: .daily, completed: false, lastCompleted: nil),
@@ -71,6 +73,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }else{
             view.backgroundColor = UIColor.white
         }
+    }
+    
+    @IBAction func resetList(_ sender: Any){
+        
+        for i in 0..<self.dailyTasks.count {
+            self.dailyTasks[i].completed = false
+        }
+        
+        for i in 0..<self.weeklyTasks.count{
+            self.weeklyTasks[i].completed = false
+        }
+        
+        for i in 0..<self.twoWeekTasks.count{
+            self.twoWeekTasks[i].completed = false
+        }
+        
+        taskTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

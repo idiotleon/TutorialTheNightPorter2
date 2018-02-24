@@ -30,6 +30,11 @@
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
+                                    <barButtonItem title="Reset List" id="CTY-Jl-ViG">
+                                        <connections>
+                                            <action selector="resetList:" destination="BYZ-38-t0r" id="J3k-05-ByQ"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="KAq-bp-eNs"/>
                                     <barButtonItem enabled="NO" title="Dark Mode" id="PsU-RL-DsH"/>
                                     <barButtonItem style="plain" id="E2s-fX-ul7">
@@ -54,6 +59,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="taskTableView" destination="1kX-wW-PvB" id="c1b-oL-zw1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
