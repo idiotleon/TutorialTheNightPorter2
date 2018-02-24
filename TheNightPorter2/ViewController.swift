@@ -77,19 +77,39 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func resetList(_ sender: Any){
         
-        for i in 0..<self.dailyTasks.count {
-            self.dailyTasks[i].completed = false
+        let confirm = UIAlertController(title: "Are you Sure?",
+                                        message: "Really reset the list?",
+                                        preferredStyle:.alert)
+        
+        let yesAction = UIAlertAction(title: "Yes", style: .destructive){
+            action in
+            
+            for i in 0..<self.dailyTasks.count {
+                self.dailyTasks[i].completed = false
+            }
+            
+            for i in 0..<self.weeklyTasks.count{
+                self.weeklyTasks[i].completed = false
+            }
+            
+            for i in 0..<self.twoWeekTasks.count{
+                self.twoWeekTasks[i].completed = false
+            }
+            
+            self.taskTableView.reloadData()
         }
         
-        for i in 0..<self.weeklyTasks.count{
-            self.weeklyTasks[i].completed = false
+        let noAction = UIAlertAction(title:"No", style:.cancel){
+            action in
+            print("That was a close on!")
         }
         
-        for i in 0..<self.twoWeekTasks.count{
-            self.twoWeekTasks[i].completed = false
-        }
+        // add actions to alert controller
+        confirm.addAction(yesAction)
+        confirm.addAction(noAction)
         
-        taskTableView.reloadData()
+        // show it
+        present(confirm, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
